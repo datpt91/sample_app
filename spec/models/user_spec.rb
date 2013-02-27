@@ -13,7 +13,7 @@ require 'spec_helper'
 
 describe User do
   before do 
-	@user = User.new(name: "Pham Tien Dat", email: "datpt91@gmail.com", password: "foobar", password_confirmation: "foobar")
+	@user = User.new(name: "Pham Tien Dat", email: "example@railstutorial.com", password: "abc123", password_confirmation: "abc123")
   end
   subject {@user}
 
@@ -22,8 +22,8 @@ describe User do
   it {should respond_to(:password_digest)}
   it {should respond_to(:password)}
   it {should respond_to(:password_confirmation)}
+  it {should respond_to(:remember_token)}
   it {should respond_to(:authenticate)}
-
   it {should be_valid }
  
   describe "when name is not present" do
@@ -98,5 +98,9 @@ describe User do
 	it {should_not == user_for_invalid_password}
 	specify { user_for_invalid_password.should be_false}
     end
+  end
+  describe "remember token" do
+	before{ @user.save}
+	its(:remember_token) {should_not be_blank}
   end
 end
